@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Toaster, toast } from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import ReactPaginate from "react-paginate";
 import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
@@ -27,6 +27,7 @@ const App: React.FC = () => {
     enabled: searchQuery !== "",
     staleTime: 5 * 60 * 1000,
     retry: 2,
+    placeholderData: keepPreviousData,
   });
 
   useEffect(() => {

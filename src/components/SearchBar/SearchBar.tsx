@@ -13,16 +13,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (query.trim() === "") {
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const searchQuery = formData.get("query") as string;
+
+    if (!searchQuery || searchQuery.trim() === "") {
       toast.error("Please enter your search query.");
       return;
     }
 
-    onSubmit(query.trim());
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+    onSubmit(searchQuery.trim());
   };
 
   return (
@@ -42,7 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
             type="text"
             name="query"
             value={query}
-            onChange={handleInputChange}
+            onChange={(e) => setQuery(e.target.value)}
             autoComplete="off"
             placeholder="Search movies..."
             autoFocus
